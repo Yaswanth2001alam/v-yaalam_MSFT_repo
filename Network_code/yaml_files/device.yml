@@ -1,0 +1,7 @@
+device:
+  hostname: r1
+  vendor: cisco
+  model: ios-xe
+  mgmt_ip: 10.10.10.1
+
+  
