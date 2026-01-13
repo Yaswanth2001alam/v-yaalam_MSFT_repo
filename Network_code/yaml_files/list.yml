@@ -8,4 +8,8 @@ vlans:
   -id: 30
   name: DMZ
 
+  -id: 500
+  name: Management_IP_servers
+  
+
   
