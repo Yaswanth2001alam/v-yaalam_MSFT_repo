@@ -3,7 +3,7 @@
   "topology": [
     {
       "xpath": "/topology[1]",
-      "name": "rwa01.str05_et-0/0/14",
+      "name": "rwa01.strtk5_FH-0/0/0/8",
       "ports": [
         "/vport[1]"
       ],
@@ -157,7 +157,7 @@
                       "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] address']/counter",
                       "step": "0.0.0.1",
                       "direction": "increment",
-                      "start": "61.100.0.1"
+                      "start": "192.168.1.83"
                     },
                     "nest": [
                       {
@@ -191,7 +191,7 @@
                       "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1] gatewayIp']/counter",
                       "step": "0.0.0.0",
                       "direction": "increment",
-                      "start": "61.100.0.0"
+                      "start": "192.168.1.82"
                     },
                     "nest": [
                       {
@@ -285,7 +285,7 @@
                           "xpath": "/multivalue[@source = '/topology[1]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] dutIp']/counter",
                           "step": "0.0.0.0",
                           "direction": "increment",
-                          "start": "61.100.0.0"
+                          "start": "192.168.1.82"
                         },
                         "nest": [
                           {
@@ -3082,7 +3082,7 @@
     },
     {
       "xpath": "/topology[2]",
-      "name": "rwa01.str15_Hu0/0/0/19",
+      "name": "fwa01.strtk6_FH0/0/0/15",
       "ports": [
         "/vport[2]"
       ],
@@ -6424,7 +6424,7 @@
                           "xpath": "/multivalue[@source = '/topology[3]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] bgpId']/counter",
                           "step": "0.0.0.1",
                           "direction": "increment",
-                          "start": "194.0.0.1"
+                          "start": "193.0.0.1"
                         },
                         "nest": [
                           {
@@ -7759,7 +7759,7 @@
                   "xpath": "/multivalue[@source = '/topology[3]/deviceGroup[1]/routerData[1] routerId']/counter",
                   "step": "0.0.0.1",
                   "direction": "increment",
-                  "start": "194.0.0.1"
+                  "start": "193.0.0.1"
                 },
                 "nest": [
                   {
@@ -9234,7 +9234,7 @@
     },
     {
       "xpath": "/topology[4]",
-      "name": "rwa01.str04_et-0/0/4",
+      "name": "rwa03.strtk5_et-3/9/1",
       "ports": [
         "/vport[4]"
       ],
@@ -9495,7 +9495,7 @@
                           "xpath": "/multivalue[@source = '/topology[4]/deviceGroup[1]/ethernet[1]/ipv4[1]/bgpIpv4Peer[1] bgpId']/counter",
                           "step": "0.0.0.1",
                           "direction": "increment",
-                          "start": "195.0.0.1"
+                          "start": "194.0.0.1"
                         },
                         "nest": [
                           {
@@ -10830,7 +10830,7 @@
                   "xpath": "/multivalue[@source = '/topology[4]/deviceGroup[1]/routerData[1] routerId']/counter",
                   "step": "0.0.0.1",
                   "direction": "increment",
-                  "start": "195.0.0.1"
+                  "start": "194.0.0.1"
                 },
                 "nest": [
                   {
