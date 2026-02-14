@@ -1,10 +1,10 @@
-"Timestamp": 2026-02-11T19:56:26.4808460Z,
+"Timestamp": 2026-02-12T18:04:55.8356908Z,
 "Hostname": rwa01.str15,
 "Config": 
-Wed Feb 11 19:56:18.885 UTC
+Thu Feb 12 18:04:48.636 UTC
 !! Building configuration...
 !! IOS XR Configuration 24.2.206
-!! Last configuration change at Wed Feb 11 19:52:06 2026 by v-yaalam
+!! Last configuration change at Thu Feb 12 18:04:00 2026 by v-yaalam
 !
 hostname rwa01.str15
 group default_lsp_setup
@@ -4207,6 +4207,7 @@ interface HundredGigE0/0/0/11 description IXIA.24LC2P5::wan_auto_test::RESERVED
 interface HundredGigE0/0/0/11 mtu 9192
 interface HundredGigE0/0/0/11 service-policy input FABRIC-QOS-IN
 interface HundredGigE0/0/0/11 service-policy output FABRIC-QOS-OUT
+interface HundredGigE0/0/0/11 vrf tms-l3vrf
 interface HundredGigE0/0/0/11 ipv4 address 61.100.11.0 255.255.255.254
 interface HundredGigE0/0/0/11 ipv6 address 2a61:100:11::1/126
 interface HundredGigE0/0/0/11 load-interval 30
@@ -9827,6 +9828,10 @@ router bgp 8075 vrf tms-l3vrf neighbor 2011:136::2 remote-as 64991
 router bgp 8075 vrf tms-l3vrf neighbor 2011:136::2 use neighbor-group IPV6-CUST-CIS-BGP-DDOS
 router bgp 8075 vrf tms-l3vrf neighbor 2011:136::2 shutdown
 router bgp 8075 vrf tms-l3vrf neighbor 2011:136::2 description v6-ixia-fl-ddos
+router bgp 8075 vrf tms-l3vrf neighbor 61.100.11.1 
+router bgp 8075 vrf tms-l3vrf neighbor 61.100.11.1 remote-as 64991
+router bgp 8075 vrf tms-l3vrf neighbor 61.100.11.1 use neighbor-group CUST-CIS-BGP-DDOS
+router bgp 8075 vrf tms-l3vrf neighbor 61.100.11.1 description ixia-fl-ddos-port11
 router bgp 8075 vrf tms-l3vrf neighbor 2603:1090:40b:34::6 
 router bgp 8075 vrf tms-l3vrf neighbor 2603:1090:40b:34::6 remote-as 64991
 router bgp 8075 vrf tms-l3vrf neighbor 2603:1090:40b:34::6 use neighbor-group IPV6-CUST-CIS-BGP-DDOS

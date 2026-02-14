@@ -1,4 +1,4 @@
-"Timestamp": 2026-02-11T19:55:30.0597639Z,
+"Timestamp": 2026-02-12T18:06:38.0628545Z,
 "Hostname": rwa01.str05,
 "Config": set version 22.4X50.17
 set groups global system root-authentication encrypted-password $PASS$
@@ -331,12 +331,10 @@ set system extensions providers juniper license-type juniper deployment-scope pr
 set system extensions providers microsoft license-type customer deployment-scope commercial
 set system extensions extension-service application file agentjunos arguments -insecureHTTPModeEnable=false
 set system extensions extension-service application file agentjunos daemonize
-deactivate system extensions extension-service application file agentjunos daemonize
 set system extensions extension-service application file agentjunos username root
 set system extensions extension-service application file apcacertagent-junos arguments "-addr 10.3.151.14"
 set system extensions extension-service application file apcacertagent-junos daemonize
 set system extensions extension-service application file apcacertagent-junos username root
-deactivate system extensions extension-service application file apcacertagent-junos
 set system rng hmac-drbg
 set system processes dhcp-service traceoptions file dhcp_logfile
 set system processes dhcp-service traceoptions file size 10m

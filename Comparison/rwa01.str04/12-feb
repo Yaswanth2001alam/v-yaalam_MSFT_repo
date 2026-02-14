@@ -1,6 +1,6 @@
-"Timestamp": 2026-02-11T19:52:54.7339704Z,
+"Timestamp": 2026-02-12T16:55:09.4680285Z,
 "Hostname": rwa01.str04,
-"Config": set version 22.4X50.17
+"Config": set version 20.3X75-D36.18
 set groups group-name
 set groups default_isis_setup protocols isis interface <*> level 2 metric 16650000
 set groups default_isis_setup protocols isis interface <*> lsp-interval 10
@@ -8,8 +8,8 @@ set groups default_isis_setup protocols isis interface <*> point-to-point
 set groups default_isis_setup protocols isis level <*> authentication-key $PASS$
 set groups default_isis_setup protocols isis level <*> authentication-type md5
 set groups default_isis_setup protocols isis level <*> prefix-export-limit 5000
-set groups default_isis_setup protocols isis spf-options delay 100
 set groups default_isis_setup protocols isis lsp-lifetime 65535
+set groups default_isis_setup protocols isis spf-options delay 100
 set groups default_interface_setup interfaces <ae*> aggregated-ether-options link-speed 100g
 set groups default_interface_setup interfaces <ae*> aggregated-ether-options lacp active
 set groups default_interface_setup interfaces <ae*> aggregated-ether-options lacp periodic fast
@@ -177,16 +177,6 @@ set groups juniper-ais event-options destinations juniper-aim archive-sites /var
 set groups rfc-5735 routing-instances <*> routing-options martians 128.0.0.0/16 orlonger allow
 set groups rfc-5735 routing-instances <*> routing-options martians 191.255.0.0/16 orlonger allow
 set groups rfc-5735 routing-instances <*> routing-options martians 223.255.255.0/24 orlonger allow
-set groups everflow_setup system scripts commit allow-transients
-set groups everflow_setup system scripts commit file jnpr_everflow_commit.py optional
-set groups everflow_setup system scripts op file jnpr_everflow_op.py command everflow
-set groups everflow_setup system scripts op file jnpr_everflow_op.py arguments action description "The action to perform: none (default), activate, deactivate."
-set groups everflow_setup system scripts op file jnpr_everflow_op.py arguments prompt description "Prompt the user for action confirmations? yes (default), no."
-set groups everflow_setup system scripts op file jnpr_everflow_op.py arguments savecfgs description "Save (deactivate) or restore (activate) Everflow configs? yes (default), no."
-set groups everflow_setup system scripts op file jnpr_everflow_op.py arguments show description "Show information about Everflow: none (default), status, filters, translations, sessions."
-set groups everflow_setup system scripts op file jnpr_everflow_op.py arguments killnetconf description "Kill active NETCONF connections when activating or deactivating Everflow. no(Default) yes"
-set groups everflow_setup forwarding-options port-mirroring family inet input rate 1
-set groups everflow_setup forwarding-options port-mirroring family inet6 input rate 1
 set groups bgpls protocols bgp graceful-restart
 deactivate groups bgpls protocols bgp graceful-restart
 set groups default_tacserver_setup system tacplus-server <*> port 49
@@ -202,7 +192,6 @@ set groups default_aggregate_setup routing-options rib inet6.0 aggregate route <
 set groups default_aggregate_setup routing-options rib inet6.0 aggregate route <*> tag 9119
 set groups default_aggregate_setup routing-options aggregate route <*> policy PERMITTED-AGGREGATE-CONTRIBUTOR
 set groups default_aggregate_setup routing-options aggregate route <*> tag 9119
-set apply-groups everflow_setup
 set system host-name rwa01.str04
 set system root-authentication encrypted-password $PASS$
 set system scripts commit allow-transients
@@ -215,7 +204,7 @@ set system scripts op file jnpr_custom_snmp.py
 set system scripts op file jnpr_disable_bgp_rib.slax
 set system scripts op file juniper_md5_check.py
 set system scripts op file log-interface-stats.slax command log-interface-stats
-set system scripts language python
+set system scripts language python3
 set system login class neteng idle-timeout 10
 set system login class neteng permissions all
 set system login class telemetry idle-timeout 15
@@ -364,7 +353,6 @@ set system extensions providers microsoft license-type juniper deployment-scope 
 set system extensions providers microsoft license-type customer deployment-scope commercial
 set system extensions extension-service application file agentjunos arguments -insecureHTTPModeEnable=true
 set system extensions extension-service application file agentjunos daemonize
-deactivate system extensions extension-service application file agentjunos daemonize
 set system extensions extension-service application file agentjunos username root
 deactivate system extensions extension-service application file agentjunos
 set system extensions extension-service application file apcacertagent-junos arguments "-addr 10.3.151.15"
@@ -399,8 +387,8 @@ set logical-systems R1 protocols isis level 1 disable
 set logical-systems R1 protocols isis level 2 authentication-key $PASS$
 set logical-systems R1 protocols isis level 2 authentication-type md5
 set logical-systems R1 protocols isis level 2 prefix-export-limit 5000
-set logical-systems R1 protocols isis spf-options delay 100
 set logical-systems R1 protocols isis lsp-lifetime 65535
+set logical-systems R1 protocols isis spf-options delay 100
 set logical-systems R1 protocols mpls interface all
 set logical-systems R1 protocols rsvp interface all
 set logical-systems R2 interfaces ae1 unit 2 vlan-id 2
@@ -421,8 +409,8 @@ set logical-systems R2 protocols isis level 1 disable
 set logical-systems R2 protocols isis level 2 authentication-key $PASS$
 set logical-systems R2 protocols isis level 2 authentication-type md5
 set logical-systems R2 protocols isis level 2 prefix-export-limit 5000
-set logical-systems R2 protocols isis spf-options delay 100
 set logical-systems R2 protocols isis lsp-lifetime 65535
+set logical-systems R2 protocols isis spf-options delay 100
 set logical-systems R2 protocols mpls interface all
 set logical-systems R2 protocols rsvp interface all
 deactivate logical-systems
@@ -474,7 +462,6 @@ set chassis fpc 7 sampling-instance ipfix_instance
 set chassis fpc 7 inline-services flow-table-size ipv4-flow-table-size 10
 set chassis fpc 7 inline-services flow-table-size ipv6-flow-table-size 5
 set chassis alarm management-ethernet link-down ignore
-set chassis network-services enhanced-mode
 set chassis thermal-health-check fet-failure-check action-onfail auto-shutdown
 set services flow-monitoring version-ipfix template ipv4_template flow-active-timeout 60
 set services flow-monitoring version-ipfix template ipv4_template flow-inactive-timeout 15
@@ -7622,33 +7609,32 @@ set firewall filter wan_in term permit_dns then accept
 set firewall filter wan_in term default-permit then sample
 set firewall filter wan_in term default-permit then routing-instance tms-l3vrf
 set routing-instances apply-groups rfc-5735
-set routing-instances ITEpremium instance-type vrf
 set routing-instances ITEpremium routing-options rib ITEpremium.inet6.0 static route ::/0 next-table inet6.0
+set routing-instances ITEpremium routing-options static route 0.0.0.0/0 next-table inet.0
 set routing-instances ITEpremium routing-options interface-routes rib-group inet global-ITEpremium
 set routing-instances ITEpremium routing-options interface-routes rib-group inet6 global-ITEpremium-ipv6
 set routing-instances ITEpremium routing-options interface-routes family inet export lan
 set routing-instances ITEpremium routing-options interface-routes family inet6 export lan
-set routing-instances ITEpremium routing-options static route 0.0.0.0/0 next-table inet.0
+set routing-instances ITEpremium instance-type vrf
 set routing-instances ITEpremium interface lo0.200
 set routing-instances ITEpremium route-distinguisher 8075:30000
 set routing-instances ITEpremium vrf-import ITEPREMIUM-IMPORT
 set routing-instances ITEpremium vrf-export ITEPREMIUM-EXPORT
 set routing-instances ITEpremium vrf-export SET-OVERLOAD-LOCAL-PREF
-set routing-instances tms-bypass-l3vrf instance-type vrf
 set routing-instances tms-bypass-l3vrf routing-options rib tms-bypass-l3vrf.inet6.0 static route ::/0 next-table tms-l3vrf.inet6.0
 set routing-instances tms-bypass-l3vrf routing-options static route 0.0.0.0/0 next-table tms-l3vrf.inet.0
 set routing-instances tms-bypass-l3vrf routing-options multipath
+set routing-instances tms-bypass-l3vrf instance-type vrf
 set routing-instances tms-bypass-l3vrf route-distinguisher 10.3.159.15:10500
 set routing-instances tms-bypass-l3vrf vrf-import DENY-ALL
 set routing-instances tms-bypass-l3vrf vrf-export DENY-ALL
-set routing-instances tms-l3vrf instance-type vrf
 set routing-instances tms-l3vrf routing-options rib tms-l3vrf.inet6.0 static route ::/0 next-table inet6.0
+set routing-instances tms-l3vrf routing-options static route 0.0.0.0/0 next-table inet.0
 set routing-instances tms-l3vrf routing-options interface-routes rib-group inet global-tmsvrf
 set routing-instances tms-l3vrf routing-options interface-routes rib-group inet6 global-tmsvrf-ipv6
 set routing-instances tms-l3vrf routing-options interface-routes family inet export lan
 set routing-instances tms-l3vrf routing-options interface-routes family inet6 export lan
 set routing-instances tms-l3vrf routing-options autonomous-system 8075
-set routing-instances tms-l3vrf routing-options static route 0.0.0.0/0 next-table inet.0
 set routing-instances tms-l3vrf routing-options multipath
 set routing-instances tms-l3vrf protocols bgp group CUST-CIS-BGP-DDOS type external
 set routing-instances tms-l3vrf protocols bgp group CUST-CIS-BGP-DDOS description "CUST:CIS:Azure DDOS"
@@ -7665,6 +7651,7 @@ set routing-instances tms-l3vrf protocols bgp group IPV6-CUST-CIS-BGP-DDOS famil
 set routing-instances tms-l3vrf protocols bgp group IPV6-CUST-CIS-BGP-DDOS family inet6 unicast prefix-limit teardown idle-timeout 45
 set routing-instances tms-l3vrf protocols bgp group IPV6-CUST-CIS-BGP-DDOS export DENY-ALL
 set routing-instances tms-l3vrf protocols bgp group IPV6-CUST-CIS-BGP-DDOS multipath multiple-as
+set routing-instances tms-l3vrf instance-type vrf
 set routing-instances tms-l3vrf interface lo0.100
 set routing-instances tms-l3vrf route-distinguisher 10.3.159.15:10101
 set routing-instances tms-l3vrf vrf-import TMS-IMPORT
@@ -7685,7 +7672,19 @@ set routing-options rib inet6.0 static route 2010::135:0:0:1/128 next-hop 2001:9
 set routing-options rib inet6.0 static route 2010::135:0:0:1/128 resolve
 set routing-options rib inet6.0 static route 2a01:111:e210:0:172:17:61:2/128 next-hop 2001:9999:9999::1:6
 set routing-options rib inet6.0 static route 2a01:111:e210:0:172:17:61:2/128 resolve
+set routing-options static route 0.0.0.0/0 next-hop 10.3.151.1
+set routing-options static route 1.1.8.1/32 next-hop 172.20.17.1
+set routing-options static route 3.3.3.3/32 next-hop 10.3.159.196
+set routing-options static route 25.0.0.0/8 next-hop 10.3.146.1
+set routing-options static route 25.64.0.0/10 next-hop 10.3.146.1
+set routing-options static route 25.78.0.0/16 next-hop 10.3.146.1
+set routing-options static route 25.192.0.0/10 discard
+set routing-options static route 100.0.0.0/8 next-hop 10.3.146.1
+set routing-options static route 100.126.0.0/16 discard
+set routing-options static route 100.127.8.144/32 next-hop 10.3.146.1
 set routing-options options syslog upto info
+set routing-options forwarding-table export load-balancing
+set routing-options forwarding-table indirect-next-hop
 set routing-options resolution rib inet.0 import mpath
 set routing-options resolution rib inet6.0 import mpath
 set routing-options interface-routes rib-group inet tms-bypass-interfaces
@@ -7697,16 +7696,6 @@ set routing-options traceoptions flag normal
 set routing-options router-id 10.3.159.15
 set routing-options autonomous-system 8075
 set routing-options no-bfd-triggered-local-repair
-set routing-options static route 0.0.0.0/0 next-hop 10.3.151.1
-set routing-options static route 1.1.8.1/32 next-hop 172.20.17.1
-set routing-options static route 3.3.3.3/32 next-hop 10.3.159.196
-set routing-options static route 25.0.0.0/8 next-hop 10.3.146.1
-set routing-options static route 25.64.0.0/10 next-hop 10.3.146.1
-set routing-options static route 25.78.0.0/16 next-hop 10.3.146.1
-set routing-options static route 25.192.0.0/10 discard
-set routing-options static route 100.0.0.0/8 next-hop 10.3.146.1
-set routing-options static route 100.126.0.0/16 discard
-set routing-options static route 100.127.8.144/32 next-hop 10.3.146.1
 set routing-options martians 128.0.0.0/16 orlonger allow
 set routing-options martians 191.255.0.0/16 orlonger allow
 set routing-options martians 223.255.255.0/24 orlonger allow
@@ -16670,8 +16659,6 @@ set routing-options srlg AMS12-AMS22_SOUTH9 srlg-value 109272
 set routing-options srlg SG3_TYO83_ADC_PLDT srlg-value 109297
 set routing-options srlg HKG20_SG3_ADC_PLDT srlg-value 109298
 set routing-options srlg HKG20_TYO83_ADC_PLDT srlg-value 109299
-set routing-options forwarding-table export load-balancing
-set routing-options forwarding-table indirect-next-hop
 set routing-options programmable-rpd purge-timeout never
 set protocols bfd traceoptions file bfd.log
 set protocols bfd traceoptions file size 10m
